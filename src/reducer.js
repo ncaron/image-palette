@@ -4,9 +4,17 @@ import initialState from './initialState';
 const reducer = (state = initialState, action) => {
   switch(action.type) {
     case types.UPLOAD_IMAGE: {
-      console.log('Image uploaded');
+      let newState = Object.assign({}, state);
 
-      return state;
+      if (!action.averageColor) {
+        return state;
+      }
+
+      let averageColor = action.averageColor;
+
+      newState.averageColor = `#${averageColor.red}${averageColor.green}${averageColor.blue}`;
+
+      return newState;
     }
 
     default:

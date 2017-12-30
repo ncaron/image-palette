@@ -31,6 +31,7 @@ class Form extends Component {
       <form action="#">
         <input
           type="file"
+          accept="image/x-png,image/gif,image/jpeg"
           onChange={ (e) => this.props.uploadImage(e, this.props.numSwatches) } />
         <select
           name="swatch-select"

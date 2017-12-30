@@ -11,8 +11,18 @@ const displayImage = (canvas, ctx, src) => {
     const width = img.width * ratio;
     const height = img.height * ratio;
 
+    canvas.width = width;
+    canvas.height = height;
+
     ctx.drawImage(img, 0, 0, width, height);
   };
+};
+
+const resetCanvas = (canvas, ctx) => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  canvas.width = 500;
+  canvas.height = 500;
 };
 
 export function uploadImage(e) {
@@ -20,7 +30,7 @@ export function uploadImage(e) {
   let ctx = canvas.getContext('2d');
   let imageReader = new FileReader();
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  resetCanvas(canvas, ctx);
 
   imageReader.readAsDataURL(e.target.files[0]);
   imageReader.onload = e => displayImage(canvas, ctx, e.target.result);

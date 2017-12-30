@@ -1,3 +1,4 @@
 export default {
-  averageColor: '',
+  numSwatches: 8,
+  colors: [],
 };

@@ -12,8 +12,8 @@ class Canvas extends Component {
   render() {
     return (
       <div>
-        <input type="file" onChange={ this.props.uploadImage } />
-        <canvas id="image-canvas" width="500" height="500">
+        <input type="file" onChange={ (e) => this.props.uploadImage(e, this.props.numSwatches) } />
+        <canvas id="image-canvas">
           Your browser does not support Canvas elements.
         </canvas>
       </div>
@@ -23,8 +23,10 @@ class Canvas extends Component {
 
 Canvas.propTypes = {
   uploadImage: PropTypes.func.isRequired,
+  numSwatches: PropTypes.number.isRequired,
 };
 
+const mapStateToProps = state => state;
 const mapDispatchToProps = dispatch => bindActionCreators({uploadImage}, dispatch);
 
-export default connect(null, mapDispatchToProps)(Canvas);
+export default connect(mapStateToProps, mapDispatchToProps)(Canvas);

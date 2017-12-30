@@ -1,4 +1,5 @@
 import * as types from './actionTypes';
+import * as constants from './contants';
 
 const displayImage = (canvas, ctx, src) => {
   let img = new Image();
@@ -6,9 +7,9 @@ const displayImage = (canvas, ctx, src) => {
 
   return new Promise((resolve) => {
     img.onload = () => {
-      // Sets canvas dimensions to be equal to image but max 500.
-      canvas.width = img.width < 500 ? img.width : 500;
-      canvas.height = img.height < 500 ? img.height : 500;
+      // Sets canvas dimensions to be equal to image but max X (defined in ./contants.js)
+      canvas.width = img.width < constants.CANVAS_SIZE ? img.width : constants.CANVAS_SIZE;
+      canvas.height = img.height < constants.CANVAS_SIZE ? img.height : constants.CANVAS_SIZE;
 
       const hRatio = canvas.width / img.width;
       const vRatio = canvas.height / img.height;
@@ -29,44 +30,57 @@ const displayImage = (canvas, ctx, src) => {
 const resetCanvas = (canvas, ctx) => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  canvas.width = 500;
-  canvas.height = 500;
+  canvas.width = constants.CANVAS_SIZE;
+  canvas.height = constants.CANVAS_SIZE;
 };
 
-const getHexColors = ({red, green, blue}) => {
+const getHexColor = ({red, green, blue}) => {
   red = red.toString(16).padStart(2, '0');
   green = green.toString(16).padStart(2, '0');
   blue = blue.toString(16).padStart(2, '0');
 
-  return {
-    red,
-    green,
-    blue
-  };
+  return `#${red}${green}${blue}`;
 };
 
-const getAverageColor = (imgData) => {
+const getAverageColor = (colors, pixelsPerSwatch) => {
+  colors.red = Math.round((colors.red / pixelsPerSwatch));
+  colors.green = Math.round((colors.green / pixelsPerSwatch));
+  colors.blue = Math.round((colors.blue / pixelsPerSwatch));
+
+  return colors;
+};
+
+const getColors = (imgData, numSwatches) => {
   let length = imgData.length;
-  let colors = {
-    red: 0,
-    green: 0,
-    blue: 0
-  };
+  const pixelsPerSwatch = Math.ceil(length / 4 / numSwatches);
+  let colors = [];
+  let currentColor = { red: 0, green: 0, blue: 0 };
+  let j = 0;
 
   for (let i = 0; i < length; i += 4) {
-    colors.red += imgData[i];
-    colors.green += imgData[i + 1];
-    colors.blue += imgData[i + 2];
+    currentColor.red += imgData[i];
+    currentColor.green += imgData[i + 1];
+    currentColor.blue += imgData[i + 2];
+
+    if (j + 1 >= pixelsPerSwatch) {
+      let averageColor = getAverageColor(currentColor, pixelsPerSwatch);
+      let hexColor = getHexColor(averageColor);
+
+      colors.push(hexColor);
+
+      currentColor.red = 0;
+      currentColor.green = 0;
+      currentColor.blue = 0;
+      j = 0;
+    }
+
+    j++;
   }
 
-  colors.red = Math.round((colors.red / length) * 4);
-  colors.green = Math.round((colors.green / length) * 4);
-  colors.blue = Math.round((colors.blue / length) * 4);
-
-  return getHexColors(colors);
+  return colors;
 };
 
-export function uploadImage(e) {
+export function uploadImage(e, numSwatches) {
   const image = e.target.files[0];
 
   if (image) {
@@ -82,15 +96,15 @@ export function uploadImage(e) {
       imageReader.onload = e => {
         let imgLoad = displayImage(canvas, ctx, e.target.result);
         imgLoad.then(imgData => {
-          resolve(getAverageColor(imgData));
+          resolve(getColors(imgData, numSwatches));
         });
       };
     });
 
-    return completePromise.then(averageColor => {
+    return completePromise.then(colors => {
       return {
         type: types.UPLOAD_IMAGE,
-        averageColor
+        colors
       };
     });
   }

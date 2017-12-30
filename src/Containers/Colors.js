@@ -6,23 +6,27 @@ import Color from '../Components/Color';
 class Colors extends Component {
   constructor(props) {
     super(props);
+
+    this.renderColors = this.renderColors.bind(this);
+  }
+
+  renderColors() {
+    return this.props.colors.map((color, key) => <Color key={ key } color={ color } />);
   }
 
   render() {
     return (
       <div>
-        {this.props.averageColor && <Color color={ this.props.averageColor } />}
+        {this.renderColors()}
       </div>
     );
   }
 }
 
 Colors.propTypes = {
-  averageColor: PropTypes.string.isRequired,
+  colors: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  return state;
-};
+const mapStateToProps = state => state;
 
 export default connect(mapStateToProps)(Colors);

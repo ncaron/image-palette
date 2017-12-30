@@ -113,3 +113,26 @@ export function uploadImage(e, numSwatches) {
     type: types.UPLOAD_IMAGE
   };
 }
+
+export function changeNumSwatches(e, loaded) {
+  const numSwatches = e.target.value;
+
+  if (loaded) {
+    let canvas = document.getElementById('image-canvas');
+    let ctx = canvas.getContext('2d');
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+
+    let colors = getColors(imgData, numSwatches);
+
+    return {
+      type: types.CHANGE_NUM_SWATCHES,
+      numSwatches,
+      colors
+    };
+  }
+
+  return {
+    type: types.CHANGE_NUM_SWATCHES,
+    numSwatches
+  };
+}

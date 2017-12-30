@@ -1,1 +1,2 @@
 export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
+export const CHANGE_NUM_SWATCHES = 'CHANGE_NUM_SWATCHES';

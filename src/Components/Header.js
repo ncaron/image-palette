@@ -1,8 +1,10 @@
 import React from 'react';
+import Logo from './Logo';
 
 const Header = () => {
   return (
-    <header>
+    <header className="header">
+      <Logo />
       <h1>Image Palette</h1>
     </header>
   );

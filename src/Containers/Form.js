@@ -37,7 +37,7 @@ class Form extends Component {
     return (
       <form action="#">
         <label>
-          Swatches
+          Max Swatches
           <select
             id="swatch-select"
             name="swatch-select"

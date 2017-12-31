@@ -66,7 +66,9 @@ const getColors = (imgData, numSwatches) => {
       let averageColor = getAverageColor(currentColor, pixelsPerSwatch);
       let hexColor = getHexColor(averageColor);
 
-      colors.push(hexColor);
+      if (!colors.includes(hexColor)) {
+        colors.push(hexColor);
+      }
 
       currentColor.red = 0;
       currentColor.green = 0;

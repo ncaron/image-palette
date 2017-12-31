@@ -1,30 +1,191 @@
+@import url('https://fonts.googleapis.com/css?family=Great+Vibes');
+
+/* VARIABLE */
+$logo-size-mobile: 60px;
+$logo-size-desktop: 100px;
+$logo-stroke: black;
+$logo-fill: white;
+$canvas-height-mobile: 350px;
+$canvas-height-desktop: 500px;
+$swatch-height-mobile: 125px;
+$swatch-height-desktop: 200px;
+
+
+/* GLOBAL */
 * { box-sizing: border-box; }
 
-/* LOGO */
+body {
+  position: relative;
+  font: normal 16px Helvetia, arial, sans-serif;
+  min-height: 100vh;
+  padding: 10px 10px 70px 10px;
+}
 
+
+/* HEADER */
+.header {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.8em;
+  text-align: center;
+  margin: 10px 0;
+  transition: all .25s;
+
+  .logo,
+  h1 {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  h1 {
+    margin-left: .5em;
+  }
+
+  @media (min-width: 1000px) {
+    font-size: 4em;
+  }
+}
+
+
+/* LOGO */
 .logo {
-  width: 50px;
-  height: 50px;
+  width: $logo-size-mobile;
+  height: $logo-size-mobile;
+  transition: all .25s;
 
   [class^="swatch-"] {
-    fill: white;
-    stroke: black;
-    stroke-width: 3px;
+    fill: $logo-fill;
+    stroke: $logo-stroke;
+    stroke-width: 2px;
     transition: all .25s;
   }
 
   .circle-1 {
-    fill: white;
-    stroke: black;
+    fill: $logo-fill;
+    stroke: $logo-stroke;
     stroke-width: 2px;
+  }
+
+  @media (min-width: 1000px) {
+    width: $logo-size-desktop;
+    height: $logo-size-desktop;
+  }
+}
+
+
+/* FORM */
+form {
+  text-align: center;
+  margin: 30px 0;
+  padding: 0 30px;
+
+  label {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  select {
+    width: 50px;
+    margin: 0 10px;
+    padding: 2px;
+    text-align: center;
+  }
+
+  .choose-file-input { display: none; }
+
+  .choose-file-display {
+    vertical-align: middle;
+    background: white;
+    padding: 3px 10px;
+    box-shadow: 0 0 10px 1px gray;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover {
+      background: lightgray;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    font-size: 1.25em;
+
+    select {
+      font-size: 1em;
+      padding: 0;
+      margin: 0 50px 0 10px;
+    }
+
+    .choose-file-display {
+      padding: 8px 10px;
+    }
+  }
+}
+
+
+/* CANVAS */
+.image-canvas {
+  display: block;
+  max-width: 100%;
+  max-height: $canvas-height-mobile;
+  margin: 0 auto 30px auto;
+  transition: all .25s;
+
+  @media (min-width: 1000px) {
+    max-height: $canvas-height-desktop;
   }
 }
 
 
 /* SWATCHES */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
 
-.color {
-  display: inline-block;
-  width: 100px;
-  height: 100px;
+  .color {
+    height: $swatch-height-mobile;
+    transition: all .25s;
+
+    .color-code {
+      background: white;
+      text-align: center;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    width: 80%;
+    margin: 0 auto;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (min-width: 1200px) {
+    .color {
+      height: $swatch-height-desktop;
+    }
+  }
+}
+
+
+/* FOOTER */
+footer {
+  position: absolute;
+  right: 0;
+  bottom: 20px;
+  left: 0;
+  text-align: center;
+  word-spacing: 2px;
+
+  .heart,
+  a {
+    color: red;
+  }
+
+  .heart {
+    font-size: 1.5em;
+  }
+
+  a {
+    font-weight: bold;
+    letter-spacing: 3px;
+  }
 }

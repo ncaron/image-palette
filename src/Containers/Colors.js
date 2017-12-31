@@ -16,7 +16,7 @@ class Colors extends Component {
 
   render() {
     return (
-      <div>
+      <div className="swatches">
         {this.renderColors()}
       </div>
     );

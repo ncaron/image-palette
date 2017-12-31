@@ -3,6 +3,7 @@ import Header from './Header';
 import Form from '../Containers/Form';
 import Canvas from './Canvas';
 import Colors from '../Containers/Colors';
+import Footer from './Footer';
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
       <Form />
       <Canvas />
       <Colors />
+      <Footer />
     </div>
   );
 };

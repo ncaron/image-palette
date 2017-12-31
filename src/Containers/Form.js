@@ -10,6 +10,7 @@ class Form extends Component {
     super(props);
 
     this.renderOptions = this.renderOptions.bind(this);
+    this.chooseFile = this.chooseFile.bind(this);
   }
 
   componentDidMount() {
@@ -26,19 +27,35 @@ class Form extends Component {
     return options;
   }
 
+  chooseFile(e) {
+    e.preventDefault();
+
+    document.getElementById('choose-file-input').click();
+  }
+
   render() {
     return (
       <form action="#">
+        <label>
+          Swatches
+          <select
+            id="swatch-select"
+            name="swatch-select"
+            onChange={ (e) => this.props.changeNumSwatches(e, this.props.loaded) }>
+            {this.renderOptions()}
+          </select>
+        </label>
+        <button
+          className="choose-file-display"
+          onClick={ this.chooseFile }>
+          Choose File
+        </button>
         <input
+          id="choose-file-input"
+          className="choose-file-input"
           type="file"
           accept="image/x-png,image/gif,image/jpeg"
           onChange={ (e) => this.props.uploadImage(e, this.props.numSwatches) } />
-        <select
-          name="swatch-select"
-          id="swatch-select"
-          onChange={ (e) => this.props.changeNumSwatches(e, this.props.loaded) }>
-          {this.renderOptions()}
-        </select>
       </form>
     );
   }

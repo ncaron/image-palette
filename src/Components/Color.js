@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Color = ({color}) => {
   return (
-    <div className="color" style={ {background: `${color}`} }>
+    <div className="color" data-clipboard-text={ color } style={ {background: `${color}`} }>
       <p className="color-code">{color}</p>
     </div>
   );

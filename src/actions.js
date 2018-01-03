@@ -138,3 +138,13 @@ export function changeNumSwatches(e, loaded) {
     numSwatches
   };
 }
+
+export function swapCase(currentCase) {
+  currentCase = currentCase === 'Lowercase' ? 'Uppercase' : 'Lowercase';
+  localStorage.setItem('case', currentCase);
+
+  return {
+    type: types.SWAP_CASE,
+    case: currentCase
+  };
+}

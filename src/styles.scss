@@ -137,6 +137,17 @@ form {
 
 
 /* SWATCHES */
+.copy {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.swapCase {
+  color: red;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .swatches {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
